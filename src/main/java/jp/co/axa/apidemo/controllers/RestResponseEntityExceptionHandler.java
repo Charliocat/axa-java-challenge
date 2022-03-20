@@ -1,6 +1,8 @@
 package jp.co.axa.apidemo.controllers;
 
+import java.util.Date;
 import javax.persistence.EntityNotFoundException;
+import jp.co.axa.apidemo.services.EmployeeServiceException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,11 +21,17 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
   }
 
+  @ExceptionHandler(EmployeeServiceException.class)
+  public ResponseEntity<ErrorDetails> handleEmployeeServiceException(EmployeeServiceException ex, WebRequest request) {
+    final ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
+    return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+  }
+
   @Override
   protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                 HttpHeaders headers, HttpStatus status,
                                                                 WebRequest request) {
-    String errorMessage = ex.getBindingResult().getFieldErrors().stream()
+    final String errorMessage = ex.getBindingResult().getFieldErrors().stream()
         .map(DefaultMessageSourceResolvable::getDefaultMessage)
         .findFirst()
         .orElse(ex.getMessage());
