@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,8 +37,10 @@ public class EmployeeController {
   }
 
   @GetMapping(value = "/employees", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<EmployeesDTO> getEmployees() {
-    final List<Employee> employees = employeeService.retrieveEmployees();
+  public ResponseEntity<EmployeesDTO> getEmployees(@RequestParam(defaultValue = "1") Integer pageNo,
+                                                   @RequestParam(defaultValue = "3") Integer pageSize,
+                                                   @RequestParam(defaultValue = "id") String sortBy) {
+    final List<Employee> employees = employeeService.retrieveEmployees(pageNo, pageSize, sortBy);
     final EmployeesDTO employeesDTO = new EmployeesDTO();
     employeesDTO.setEmployees(employees);
     return new ResponseEntity<>(employeesDTO, HttpStatus.OK);
@@ -79,7 +82,7 @@ public class EmployeeController {
   }
 
   private Employee converToEmployee(final EmployeeDTO employeeModel) {
-    Employee employee = new Employee();
+    final Employee employee = new Employee();
     employee.setName(employeeModel.getName());
     employee.setSalary(employeeModel.getSalary());
     employee.setDepartment(employeeModel.getDepartment());

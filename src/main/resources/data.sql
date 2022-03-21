@@ -1,0 +1,8 @@
+insert into EMPLOYEE (EMPLOYEE_NAME, EMPLOYEE_SALARY, DEPARTMENT) values ('Carles', 5000, 'Engineering')
+insert into EMPLOYEE (EMPLOYEE_NAME, EMPLOYEE_SALARY, DEPARTMENT) values ('Haruto', 15000, 'Sales')
+insert into EMPLOYEE (EMPLOYEE_NAME, EMPLOYEE_SALARY, DEPARTMENT) values ('Emma', 800, 'Engineering')
+insert into EMPLOYEE (EMPLOYEE_NAME, EMPLOYEE_SALARY, DEPARTMENT) values ('Maria', 400, 'Engineering')
+insert into EMPLOYEE (EMPLOYEE_NAME, EMPLOYEE_SALARY, DEPARTMENT) values ('Aiko', 8200, 'Board')
+insert into EMPLOYEE (EMPLOYEE_NAME, EMPLOYEE_SALARY, DEPARTMENT) values ('Akira', 20, 'Finance')
+insert into EMPLOYEE (EMPLOYEE_NAME, EMPLOYEE_SALARY, DEPARTMENT) values ('Clark', 470, 'Engineering')
+insert into EMPLOYEE (EMPLOYEE_NAME, EMPLOYEE_SALARY, DEPARTMENT) values ('Laura', 7500, 'Board')

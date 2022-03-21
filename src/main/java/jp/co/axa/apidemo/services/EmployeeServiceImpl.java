@@ -1,5 +1,6 @@
 package jp.co.axa.apidemo.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import jp.co.axa.apidemo.entities.Employee;
@@ -9,6 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,8 +29,14 @@ public class EmployeeServiceImpl implements EmployeeService {
   }
 
   @Override
-  public List<Employee> retrieveEmployees() {
-    return employeeRepository.findAll();
+  public List<Employee> retrieveEmployees(Integer pageNo, Integer pageSize, String sortBy) {
+    final Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by(sortBy));
+    final Page<Employee> pagedResult = employeeRepository.findAll(pageable);
+    if (pagedResult.hasContent()) {
+      return pagedResult.getContent();
+    }
+
+    return new ArrayList<>();
   }
 
   /**

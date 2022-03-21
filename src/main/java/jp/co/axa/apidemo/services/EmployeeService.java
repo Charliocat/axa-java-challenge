@@ -5,7 +5,7 @@ import jp.co.axa.apidemo.entities.Employee;
 
 public interface EmployeeService {
 
-  List<Employee> retrieveEmployees();
+  List<Employee> retrieveEmployees(Integer pageNo, Integer pageSize, String sortBy);
 
   Employee getEmployee(Long employeeId);
 
